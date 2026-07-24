@@ -1,0 +1,262 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — Subtle-gradient-DESIGN.md
+   Single source of truth. Components reference these, never raw hex.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Brand & accent — one interactive colour, no second accent */
+  --color-primary: #2563eb;
+  --color-primary-focus: #1d4ed8;
+  --color-primary-on-dark: #60a5fa;
+
+  /* Tycho Coaching wordmark accent (brand carry-over, never interactive) */
+  --color-brand-teal: #14b8a6;
+
+  /* Text */
+  --color-ink: #0f172a;
+  --color-body: #1e293b;
+  --color-body-on-dark: #f8fafc;
+  --color-body-muted: #cbd5e1;
+  --color-ink-muted-80: #334155;
+  --color-ink-muted-48: #64748b;
+  --color-ink-muted-32: #94a3b8;
+
+  /* Hairlines */
+  --color-divider-soft: #e8eef5;
+  --color-hairline: #d8e2ec;
+
+  /* Surfaces */
+  --color-canvas: #ffffff;
+  --color-canvas-parchment: #f6f8fb;
+  --color-surface-pearl: #fbfcfe;
+  --color-surface-tile-1: #0b1726;
+  --color-surface-tile-2: #102033;
+  --color-surface-tile-3: #07111d;
+  --color-surface-black: #05090f;
+
+  /* Radii */
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+
+  /* Spacing tokens beyond Tailwind's scale */
+  --spacing-section: 88px;
+
+  /* The single drop-shadow in the system — photography only */
+  --shadow-photo: rgba(0, 0, 0, 0.22) 3px 5px 30px;
+
+  /* Type */
+  --font-sans: var(--font-inter), Inter, system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+
+  /* Design-system breakpoints (1068 / 833 / 640 / 419).
+     Registered one pixel up so the `max-*` variants land on the documented
+     boundary: `max-tab:` === @media (max-width: 833.98px). */
+  --breakpoint-xs: 420px;
+  --breakpoint-ph: 641px;
+  --breakpoint-tab: 834px;
+  --breakpoint-desk: 1069px;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky sub-nav is 52px; anchors clear it. */
+    scroll-padding-top: 64px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Visible focus everywhere, keyboard-only so mouse users keep a clean UI. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::placeholder {
+    color: var(--color-ink-muted-32);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Typography roles — the documented ladder (300 / 400 / 600 / 700).
+   Sizes step down at the design-system breakpoints 1068 / 833 / 640 / 419.
+--------------------------------------------------------------------------- */
+@layer components {
+  .t-hero {
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1.07;
+    letter-spacing: -0.28px;
+    text-wrap: balance;
+  }
+
+  .t-display {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.374px;
+    text-wrap: balance;
+  }
+
+  .t-display-lg {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.374px;
+    text-wrap: balance;
+  }
+
+  .t-tagline {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.19;
+    letter-spacing: 0.1px;
+  }
+
+  .t-lead {
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.1px;
+    text-wrap: pretty;
+  }
+
+  .t-lead-airy {
+    font-size: 21px;
+    font-weight: 300;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  .t-body {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.47;
+    letter-spacing: -0.374px;
+    text-wrap: pretty;
+  }
+
+  .t-body-strong {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.24;
+    letter-spacing: -0.374px;
+  }
+
+  .t-caption {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: -0.224px;
+  }
+
+  .t-caption-strong {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.29;
+    letter-spacing: -0.224px;
+  }
+
+  .t-fine {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.12px;
+  }
+
+  .t-eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.29;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+  }
+
+  .t-dense-link {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 2.41;
+  }
+
+  /* Responsive type — matches the handoff's breakpoint overrides. */
+  @media (max-width: 1068px) {
+    .t-hero {
+      font-size: 46px;
+    }
+    .t-display,
+    .t-display-lg {
+      font-size: 32px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .t-hero {
+      font-size: 34px;
+    }
+    .t-display {
+      font-size: 27px;
+    }
+    .t-display-lg {
+      font-size: 30px;
+    }
+    .t-lead {
+      font-size: 19px;
+    }
+  }
+
+  @media (max-width: 419px) {
+    .t-hero {
+      font-size: 30px;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+--------------------------------------------------------------------------- */
+@utility shadow-photo {
+  box-shadow: var(--shadow-photo);
+}
+
+/* System-wide press micro-interaction. Default + active only — no hover states. */
+@utility press {
+  transition: transform 120ms ease-out;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press:active {
+    transform: none;
+  }
+}
